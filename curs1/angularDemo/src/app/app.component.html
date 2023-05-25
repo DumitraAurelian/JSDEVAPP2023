@@ -1,0 +1,43 @@
+{{title}}
+
+<br>
+{{2 + 4}}
+
+<br>
+
+<p [style.color]="culoare">
+  {{descriere }}
+</p>
+<img src="{{ imgSrc }}" alt="" style = " max-width: 300px;">
+<img *ngIf="afiseaza" [src] =" imgSrc " alt="" style = "max-width: 300px;">
+<br>
+<br>
+<button (click)="showImg()">Afiseaza/Ascunde imaginea</button>
+<button (click)="showImg2()">Afiseaza/Ascunde </button>
+<br>
+<button (click)="nr = nr+1">Creste valoarea cu 1</button>
+<button (click)="nr = nr -1">Scade valoarea cu 1</button>
+<p [ngClass]="nr >=7? 'green': 'myclass'">Valoarea lui nr este {{nr }}</p>
+<!-- daca numarul este mai mare sau egal cu 7 sa fie clasa green, daca nu sa fie clasa my class, definite in app.components.css -->
+<br>
+
+<form action="" method="post">
+
+  <input [(ngModel)]= "valoare" type="text" name="nume" id="nume" (input)="inputCount()">
+  {{valoare}}
+</form>
+<br>
+
+<h1>{{persoana.nume}} {{persoana.prenume}}</h1>
+
+<br>
+<h2> Eroi</h2>
+<p>Eroii mei preferati sunt</p>
+<ul>
+  <li *ngFor="let erou of eroi">
+    <span *ngIf="erou.id<=2">{{erou.id}}- {{erou.name}}</span>
+  <!-- /* *ngIf="erou.id<=2 ne arata primii doi eroi. Daca puneam ==2, il arata doar pe al doilea"*/ -->
+  </li>
+</ul>
+
+<router-outlet></router-outlet>
