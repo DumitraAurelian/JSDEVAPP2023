@@ -1,1 +1,78 @@
-<p>admin works!</p>
+<div class="container">
+  <h1>Adaugare/Editare user</h1>
+  <form #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="nume">Nume</label>
+      <input [(ngModel)]="selectedUser.nume" #nume="ngModel"
+        type="text"
+        class="form-control"
+        name="nume"
+        id="nume"
+        aria-describedby="numeHelp"
+        placeholder="Nume"
+        required minlength="3"
+        maxlength="250"
+        pattern="^[a-zA-Z-]+$"
+        [class.is-invalid]="nume.invalid && (nume.dirty || nume.touched)" class="invalid-feedback"
+      />
+      <small *ngIf="nume.valid" id="numeHelp" class="form-text text-muted"
+        >Nume completat corect</small
+      >
+      <div *ngIf="nume.invalid && (nume.dirty || nume.touched)" class="invalid-feedback">
+        <div *ngIf="nume.errors?.['required']">Acest camp este obligatoriu</div>
+        <div *ngIf="nume.errors?.['minlength']">Acest camp trebuie sa fie de minim 3 caractere</div>
+        <div *ngIf="nume.errors?.['maxlength']">Acest camp trebuie sa fie de minim 250 caractere</div>
+        <div *ngiI="nume.errors?.['pattern']">Acest camp trebuie sa contina doar caractere alfanumerice </div>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="prenume">Prenume</label>
+        <input
+          type="text"
+          class="form-control"
+          name="prenume"
+          id="prenume"
+          aria-describedby="prenumeHelp"
+          placeholder="Prenume"
+        />
+        <!-- <small id="prenumeHelp" class="form-text text-muted"
+          >We'll never share your email with anyone else.</small
+        > -->
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="datanastere">Data nastere</label>
+        <input
+          type="date"
+          class="form-control"
+          name="datanastere"
+          id="datanastere"
+          aria-describedby="datanastereHelp"
+          placeholder="Data nastere"
+        />
+        <!-- <small id="prenumeHelp" class="form-text text-muted"
+          >We'll never share your email with anyone else.</small
+        > -->
+      </div>
+
+  
+    <div class="form-group">
+      <label for="telefon">Telefon</label>
+      <input
+        type="text"
+        class="form-control"
+        id="telefon"
+        placeholder="Telefon"
+      />
+    </div>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button (click)="createOrUpdateUser(f)" type="submit" class="btn btn-primary">Create or update user</button>
+  </form>
+</div>
