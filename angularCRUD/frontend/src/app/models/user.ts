@@ -2,9 +2,10 @@ export interface User {
     id: number,
     nume: string,
     prenume: string,
+    datanastere:Date, //string
     email:string,
-    datanastere: Date,
-    dataadaugare?: Date,
-    telefon: string
+    telefon: string,
+    dataadaugare?:Date,
+    actiune?:string,
+    'users'?:any
 }
-// tipul de date cu care o sa ne jucam

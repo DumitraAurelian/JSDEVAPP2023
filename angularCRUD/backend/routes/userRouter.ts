@@ -21,7 +21,7 @@ userRouter.get("/:id", async (req: Request, res: Response) => {
     if (err) {
       return res.status(500).json({"message": err.message});
     }
-    res.status(200).json({"data": user});
+    res.status(200).json({"users": user});
   })
 });
 

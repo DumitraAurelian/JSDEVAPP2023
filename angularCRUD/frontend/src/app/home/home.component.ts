@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ApiService } from '../api.service';
 import { User } from '../models/user';
 
@@ -8,16 +9,20 @@ import { User } from '../models/user';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  users: User[]=[];
-
-  constructor(private apiService:ApiService) { }
-  // injectam serviciul
+  users:User[] = [];
+  constructor(private title: Title, private apiService:ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.readUsers().subscribe((users:User[])=> {
-      console.log(users["users"]);
-      this.users=users ["users"];
-    })
+    this.title.setTitle("Product Page - This is the product page");
+    this.readUsers();
+  }
+
+  readUsers() {
+    // read
+    this.apiService.readUsers().subscribe((users: User[]) => {
+      this.users = users['users'];
+     
+    });
   }
 
 }

@@ -47,7 +47,7 @@ userRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (err) {
             return res.status(500).json({ "errorMessage": err.message });
         }
-        res.status(200).json({ users });
+        res.status(200).json({ "users": users });
     });
 }));
 userRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -56,7 +56,7 @@ userRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (err) {
             return res.status(500).json({ "message": err.message });
         }
-        res.status(200).json({ "data": user });
+        res.status(200).json({ "users": user });
     });
 }));
 userRouter.post("/", jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
