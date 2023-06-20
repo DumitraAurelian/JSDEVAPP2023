@@ -1,0 +1,1 @@
+legatura dintre Node si Frontend se face prin route
