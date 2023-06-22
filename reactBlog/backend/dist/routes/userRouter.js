@@ -1,5 +1,4 @@
 "use strict";
-//imi import express pentru postari de tip get, post, put...tipul de date, modulul
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -42,11 +41,12 @@ const bodyParser = __importStar(require("body-parser"));
 const userModel = __importStar(require("../models/user"));
 const express_validator_1 = require("express-validator");
 const jwt_1 = require("../jwt");
+const jwt_2 = require("../jwt");
 const userRouter = express_1.default.Router();
 exports.userRouter = userRouter;
 var jsonParser = bodyParser.json();
 userRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!(0, jwt_1.verifyToken)(req, res)) {
+    if (!(0, jwt_2.verifyToken)(req, res)) {
         return res.status(403).json({ "message": '<b>Trebue sa fi logat pentru a accesa aceasta zona!<b>' });
     }
     userModel.findAll((err, users) => {
@@ -57,7 +57,7 @@ userRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 }));
 userRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!(0, jwt_1.verifyToken)(req, res)) {
+    if (!(0, jwt_2.verifyToken)(req, res)) {
         return res.status(403).json({ "message": '<b>Trebue sa fi logat pentru a accesa aceasta zona!<b>' });
     }
     const userId = Number(req.params.id);
@@ -72,17 +72,15 @@ userRouter.post("/", jsonParser, [
     (0, express_validator_1.check)('nume', 'Name is requied').not().isEmpty(),
     (0, express_validator_1.check)('prenume', 'Name is requied').not().isEmpty(),
     (0, express_validator_1.check)('email', 'Please include a valid email').isEmail().normalizeEmail({ gmail_remove_dots: true }),
-    (0, express_validator_1.check)('parola', 'Password must be 8 or more characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "i") //am pus si o validare ca parola 
-    //sa aiba litera mare, mica, cifra si caractere speciale si minim 8 caractere
+    (0, express_validator_1.check)('parola', 'Password must be 8 or more characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "i")
 ], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const errors = (0, express_validator_1.validationResult)(req);
     console.log(errors);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ 'message': errors.array() }); // daca validarile nu sunt respectate dau eroare cu erorile pe care le trecem noi in react.
-        //Asta previne sa crape server-ul
+        return res.status(400).json({ 'message': errors.array() });
     }
-    const newUser = req.body; //daca nu da nici o eroare, imi creaza utilizatorul
+    const newUser = req.body;
     userModel.create(newUser, (err, userId) => {
         if (err) {
             return res.status(500).json({ "message": err.message });
@@ -92,7 +90,7 @@ userRouter.post("/", jsonParser, [
 }));
 // Edit user
 userRouter.put("/:id", jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!(0, jwt_1.verifyToken)(req, res)) {
+    if (!(0, jwt_2.verifyToken)(req, res)) {
         return res.status(403).json({ "message": '<b>Trebue sa fi logat pentru a accesa aceasta zona!<b>' });
     }
     const user = req.body;
@@ -109,7 +107,7 @@ userRouter.put("/:id", jsonParser, (req, res) => __awaiter(void 0, void 0, void 
 }));
 // Delete user
 userRouter.delete("/:id", jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!(0, jwt_1.verifyToken)(req, res)) {
+    if (!(0, jwt_2.verifyToken)(req, res)) {
         return res.status(403).json({ "message": '<b>Trebue sa fi logat pentru a accesa aceasta zona!<b>' });
     }
     const userId = Number(req.params.id);
@@ -146,5 +144,11 @@ userRouter.post("/veifyLogin", jsonParser, (req, res) => __awaiter(void 0, void 
             roles: 'ADMIN',
             accessToken: token
         });
+    });
+}));
+userRouter.post("/logout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return res.status(200).json({
+        accessToken: null,
+        message: "User has been logged out."
     });
 }));

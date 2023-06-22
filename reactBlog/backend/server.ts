@@ -1,14 +1,11 @@
-
-//
-
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
 import  session, {Session} from "express-session";
-import { userRouter } from './routes/userRouter'; //routa definita
-import { postRouter } from './routes/postRouter';// ruta definita
-import { adminRouter } from './routes/adminRouter';// ruta definita
+import { userRouter } from './routes/userRouter';
+import { postRouter } from './routes/postRouter';
+import { adminRouter } from './routes/adminRouter';
 dotenv.config();
 
 const app: Express = express();

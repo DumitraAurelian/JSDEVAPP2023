@@ -1,13 +1,11 @@
-//imi import express pentru postari de tip get, post, put...tipul de date, modulul
-
 import express, {Request, Response} from "express";
 import * as bodyParser from "body-parser";
 
 import * as userModel from "../models/user";
 import {User} from "../types/User";
 import { check,validationResult }  from 'express-validator';
-import { generateToken, verifyToken  } from '../jwt';
-
+import { generateToken } from '../jwt';
+import { verifyToken } from '../jwt';
 
 const userRouter = express.Router();
 var jsonParser = bodyParser.json();
@@ -45,19 +43,17 @@ userRouter.post("/",jsonParser,
   check('nume', 'Name is requied').not().isEmpty(),
   check('prenume', 'Name is requied').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail().normalizeEmail({ gmail_remove_dots: true }),
-  check('parola', 'Password must be 8 or more characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "i")//am pus si o validare ca parola 
-  //sa aiba litera mare, mica, cifra si caractere speciale si minim 8 caractere
+  check('parola', 'Password must be 8 or more characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, "i")
 ]
 , async (req: Request, res: Response) => {
   console.log(req.body);
   const errors = validationResult(req);
   console.log(errors);
   if (!errors.isEmpty()) {
-      return res.status(400).json({ 'message': errors.array() }); // daca validarile nu sunt respectate dau eroare cu erorile pe care le trecem noi in react.
-      //Asta previne sa crape server-ul
+      return res.status(400).json({ 'message': errors.array() });
   }
   
-  const newUser: User = req.body; //daca nu da nici o eroare, imi creaza utilizatorul
+  const newUser: User = req.body;
   userModel.create(newUser, (err: Error, userId: number) => {
     if (err) {
       return res.status(500).json({"message": err.message});
@@ -127,5 +123,11 @@ userRouter.post("/veifyLogin",jsonParser, async (req: Request, res: Response) =>
     });
   });
 });
+userRouter.post("/logout", async (req: Request, res: Response) => {
+  return  res.status(200).json({
+    accessToken: null,
+    message: "User has been logged out."
+  })
+})
 
 export {userRouter};

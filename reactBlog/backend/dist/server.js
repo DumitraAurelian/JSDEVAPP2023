@@ -1,5 +1,4 @@
 "use strict";
-//
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -9,9 +8,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
-const userRouter_1 = require("./routes/userRouter"); //routa definita
-const postRouter_1 = require("./routes/postRouter"); // ruta definita
-const adminRouter_1 = require("./routes/adminRouter"); // ruta definita
+const userRouter_1 = require("./routes/userRouter");
+const postRouter_1 = require("./routes/postRouter");
+const adminRouter_1 = require("./routes/adminRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: true }));
